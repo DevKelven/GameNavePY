@@ -25,19 +25,45 @@ class InvasaoAlien:
 
     def jogo_on(self):
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            def _checaar_eventos(self):
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    elif event.type == pygame.KEYDOWN:
+                       self._checar_teclaspress_eventos(event)
+                    elif event.type == pygame.KEYUP:
+                       self._checar_soltarpress_eventos(event)
+            def _checar_teclaspress_eventos(self, event):
+                if event.key == pygame.K_RIGHT:
+                    self.nave.mover_direita = True
+                elif event.key == pygame.K_LEFT:
+                    self.nave.mover_esquerda = True
+                elif event.key == pygame.K_q:
                     sys.exit()
+            def _checar_soltarteclas_eventos(self, event):
+                if event.key == pygame.K_RIGHT:
+                    self.nave.mover_direita = False
+                elif event.key == pygame.K_LEFT:
+                    self.nave.mover_esquerda = False
+                          
+                            
 
-            self.screen.fill(self.settings.bg_color)
-            self.nave.blitme()
+            def _atualiza_tela(self):
+                self.screen.fill(self.settings.bg_color)
+                self.nave.blitme()
 
-            # ATUALIZA A TELA
-            pygame.display.flip()
+                # ATUALIZA A TELA
+                pygame.display.flip()
 
-            # CONTROLA A TAXA DE FRAMES POR SEGUNDO
-            self.clock.tick(60) # NESTE CASO ESTA CONFIGURADO PARA FUNCIONAR A 60 FRAMES POR SEGUNDO
+                # CONTROLA A TAXA DE FRAMES POR SEGUNDO
+                self._checar_eventos()
+                self.nave.update()
+                self._atualiza_tela()
+                self.clock.tick(60) # NESTE CASO ESTA CONFIGURADO PARA FUNCIONAR A 60 FRAMES POR SEGUNDO
 
 if __name__ == '__main__':
     ia = InvasaoAlien()
     ia.jogo_on()
+
+    
+    
